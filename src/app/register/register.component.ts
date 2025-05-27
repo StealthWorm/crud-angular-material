@@ -1,11 +1,35 @@
 import { Component } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { Client } from './client';
+import { ClientService } from '../services/clients/client.service';
 
 @Component({
   selector: 'app-register',
-  imports: [],
+  imports: [
+    FlexLayoutModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCardModule,
+    FormsModule,
+    MatIconModule
+  ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
+  client: Client = Client.newClient();
 
+  // Injeta o serviço de cliente
+  constructor(private clientService: ClientService) { }
+
+  onSubmit() {
+    this.clientService.register(this.client);
+  }
 }

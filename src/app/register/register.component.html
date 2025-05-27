@@ -1,1 +1,93 @@
-<p>register works!</p>
+<div fxLayout="row" fxLayoutAlign="center center" class="container">
+  <div fxLayout="column" fxLayoutAlign="center center" fxFlex.gt-sm="600px"
+    fxFlex="100%">
+    <mat-card class="mt-100 full-width">
+      <mat-card-header>
+        <mat-card-title>Dados pessoais</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form
+          #clientForm="ngForm"
+          (ngSubmit)="onSubmit()"
+          class="form-box"
+          fxLayout="column"
+          fxLayoutGap="16px">
+          <mat-form-field class="form-field" fxFlex.gt-sm="50" fxFlex="100%">
+            <mat-label>Nome</mat-label>
+            <input
+              matInput
+              type="text"
+              name="name"
+              [(ngModel)]="client.name"
+              placeholder="Digite seu nome"
+              required>
+          </mat-form-field>
+          <mat-form-field class="form-field" fxFlex.gt-sm="50" fxFlex="100%">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              type="email"
+              name="email"
+              [(ngModel)]="client.email"
+              placeholder="Digite seu email"
+              required>
+          </mat-form-field>
+
+          <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="16px"
+            class="full-width">
+            <mat-form-field class="form-field" fxFlex="100%">
+              <mat-label>Data de nascimento</mat-label>
+              <input
+                matInput
+                type="date"
+                name="birthDate"
+                [(ngModel)]="client.birthDate"
+                placeholder="Digite sua data de nascimento"
+                required>
+            </mat-form-field>
+
+            <mat-form-field class="form-field" fxFlex="100%">
+              <mat-label>CPF</mat-label>
+              <input
+                matInput
+                type="text"
+                name="cpf"
+                [(ngModel)]="client.cpf"
+                placeholder="Digite seu CPF"
+                required>
+            </mat-form-field>
+          </div>
+
+          <mat-card-actions fxLayout="column" fxLayout.gt-sm="grid"
+            fxLayoutGap="16px" class="card-actions">
+            <button
+              mat-flat-button
+              color="primary"
+              type="submit"
+              fxFlex="100%">
+              <mat-icon fontIcon="save"></mat-icon>
+              Salvar
+            </button>
+
+            <button
+              mat-flat-button
+              color="primary"
+              type="submit"
+              fxFlex="100%">
+              <mat-icon fontIcon="refresh"></mat-icon>
+              Atualizar
+            </button>
+
+            <button
+              mat-flat-button
+              color="warn"
+              fxFlex="100%">
+              <mat-icon fontIcon="delete"></mat-icon>
+              Limpar
+            </button>
+          </mat-card-actions>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
