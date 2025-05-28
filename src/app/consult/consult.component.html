@@ -1,1 +1,41 @@
-<p>consult works!</p>
+<div class="container" fxLayout="row" fxLayoutAlign="center center">
+  <div fxLayout="column" fxFlex="100%">
+    <form #formConsult="ngForm" fxLayoutAlign="center center" class="mt-60">
+      <mat-card appearance="outlined" class="card">
+        <mat-card-header class="header-card">
+          <mat-card-title>
+            Consultar Cliente
+          </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content
+          fxLayout="column"
+          fxLayoutAlign="center center"
+          fxFlex="100%"
+          class="card-content">
+          <div fxLayout="row" class="full-width">
+            <div fxLayout="column" fxFlex="100%">
+              <mat-form-field>
+                <mat-label>Nome</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  name="name"
+                  placeholder="Digite o nome do cliente" />
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button
+            mat-flat-button
+            color="primary"
+            type="submit"
+            fxFlex="100%">
+            <mat-icon fontIcon="search"></mat-icon>
+            Consultar
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </form>
+  </div>
