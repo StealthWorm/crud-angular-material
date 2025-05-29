@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { ClientService } from '../services/clients/client.service';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { Client } from '../register/client';
 
 @Component({
@@ -21,14 +22,17 @@ import { Client } from '../register/client';
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
   templateUrl: './consult.component.html',
   styleUrl: './consult.component.scss'
 })
 export class ConsultComponent {
-  displayedColumns: string[] = ['id', 'name', 'email', 'phone', 'address', 'actions'];
+  displayedColumns: string[] = ['id', 'name', 'email', 'birthDate', 'cpf', 'actions'];
   clientsList: Client[] = [];
+  searchName: string = '';
 
   constructor(private clientService: ClientService) { }
 
@@ -37,7 +41,7 @@ export class ConsultComponent {
     this.clientsList = this.clientService.getAll();
   }
 
-  searchClient(name: string) {
-    this.clientsList = this.clientService.getByName(name);
+  searchClient() {
+    this.clientsList = this.clientService.getByName(this.searchName);
   }
 }

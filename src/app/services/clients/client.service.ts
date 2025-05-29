@@ -31,6 +31,11 @@ export class ClientService {
 
   getByName(name: string): Client[] {
     const clients = this.getAll();
-    return clients.filter((client) => client?.name?.toLowerCase().includes(name.toLowerCase()));
+
+    if (!name) {
+      return clients;
+    }
+
+    return clients.filter((client) => client?.name?.indexOf(name) !== -1);
   }
 }
