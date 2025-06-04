@@ -38,4 +38,29 @@ export class ClientService {
 
     return clients.filter((client) => client?.name?.indexOf(name) !== -1);
   }
+
+  getById(clientId: string): Client | undefined {
+    const clients = this.getAll();
+
+    return clients.find((client) => client.id === clientId);
+  }
+
+  update(client: Client) {
+    const clients = this.getAll();
+    const index = clients.findIndex((c) => c.id === client.id);
+
+    clients[index] = client;
+    localStorage.setItem(ClientService.REPO_CLIENTS, JSON.stringify(clients));
+  }
+
+  delete(clientId: string) {
+    const clients = this.getAll();
+
+    const index = clients.findIndex((client) => client.id === clientId);
+
+    if (index !== -1) {
+      clients.splice(index, 1);
+      localStorage.setItem(ClientService.REPO_CLIENTS, JSON.stringify(clients));
+    }
+  }
 }

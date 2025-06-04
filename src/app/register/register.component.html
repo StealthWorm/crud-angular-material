@@ -39,10 +39,11 @@
               <mat-label>Data de nascimento</mat-label>
               <input
                 matInput
-                type="date"
+                type="text"
                 name="birthDate"
                 [(ngModel)]="client.birthDate"
                 placeholder="Digite sua data de nascimento"
+                mask="00/00/0000"
                 required>
             </mat-form-field>
 
@@ -54,29 +55,35 @@
                 name="cpf"
                 [(ngModel)]="client.cpf"
                 placeholder="Digite seu CPF"
+                mask="000.000.000-00"
                 required>
             </mat-form-field>
           </div>
 
           <mat-card-actions fxLayout="column" fxLayout.gt-sm="grid"
             class="card-actions">
-            <button
-              mat-flat-button
-              color="primary"
-              type="submit"
-              fxFlex="100%">
-              <mat-icon fontIcon="save"></mat-icon>
-              Salvar
-            </button>
+            <ng-container *ngIf="isEdit; else saveButton">
+              <button
+                mat-flat-button
+                color="primary"
+                type="submit"
+                fxFlex="100%">
+                <mat-icon fontIcon="refresh"></mat-icon>
+                Atualizar
+              </button>
+            </ng-container>
 
-            <button
-              mat-flat-button
-              color="primary"
-              type="submit"
-              fxFlex="100%">
-              <mat-icon fontIcon="refresh"></mat-icon>
-              Atualizar
-            </button>
+            <!-- NG-TEMPLATE permite usar o else do ngIf -->
+            <ng-template #saveButton>
+              <button
+                mat-flat-button
+                color="primary"
+                type="submit"
+                fxFlex="100%">
+                <mat-icon fontIcon="save"></mat-icon>
+                Salvar
+              </button>
+            </ng-template>
 
             <button
               mat-flat-button

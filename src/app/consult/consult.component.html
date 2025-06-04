@@ -1,113 +1,137 @@
-<div class="container" fxLayout="row" fxLayoutAlign="center center">
-  <div fxLayout="column" fxFlex="100%">
-    <form
-      #formConsult="ngForm"
-      (ngSubmit)="searchClient()"
-      fxLayoutAlign="center center" class="mt-60">
-      <mat-card appearance="outlined" class="card">
+<div
+  class="container"
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  fxLayoutGap="2rem">
+  <div fxLayout="row" fxFlex="100%">
+    <div fxLayout="column" fxFlex="1200px">
+      <form
+        #formConsult="ngForm"
+        (ngSubmit)="searchClient()"
+        fxLayoutAlign="center center" class="mt-60">
+        <mat-card appearance="outlined" class="card">
+          <mat-card-header class="header-card">
+            <mat-card-title>
+              Consultar Cliente
+            </mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content
+            fxLayout="column"
+            fxLayoutAlign="center center"
+            fxFlex="100%"
+            class="card-content">
+            <div fxLayout="row" class="full-width">
+              <div fxLayout="column" fxFlex="100%">
+                <mat-form-field>
+                  <mat-label>Nome</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    name="searchName"
+                    [(ngModel)]="searchName"
+                    placeholder="Digite o nome do cliente" />
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <button
+              mat-flat-button
+              color="primary"
+              type="submit"
+              fxFlex="100%">
+              <mat-icon fontIcon="search"></mat-icon>
+              Pesquisar
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </form>
+    </div>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="center">
+    <div fxLayout="column" fxFlex="1200px">
+      <mat-card appearance="outlined" fxFlex="100%">
         <mat-card-header class="header-card">
           <mat-card-title>
-            Consultar Cliente
+            Tabela de Clientes
           </mat-card-title>
         </mat-card-header>
 
-        <mat-card-content
-          fxLayout="column"
-          fxLayoutAlign="center center"
-          fxFlex="100%"
-          class="card-content">
-          <div fxLayout="row" class="full-width">
-            <div fxLayout="column" fxFlex="100%">
-              <mat-form-field>
-                <mat-label>Nome</mat-label>
-                <input
-                  matInput
-                  type="text"
-                  name="searchName"
-                  [(ngModel)]="searchName"
-                  placeholder="Digite o nome do cliente" />
-              </mat-form-field>
-            </div>
+        <mat-card-content>
+          <!--  class="mat-elevation-z8" -->
+          <div>
+            <table
+              mat-table
+              [dataSource]="dataSource"
+              matSort
+              (matSortChange)="announceSortChange($event)">
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef> ID </th>
+                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="name">
+                <th
+                  mat-header-cell
+                  *matHeaderCellDef
+                  mat-sort-header
+                  sortActionDescription="Nome">
+                  Nome
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef> Email </th>
+                <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="birthDate">
+                <th mat-header-cell *matHeaderCellDef> Data de Nascimento </th>
+                <td mat-cell *matCellDef="let element"> {{element.birthDate}}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="cpf">
+                <th mat-header-cell *matHeaderCellDef> CPF </th>
+                <td mat-cell *matCellDef="let element"> {{element.cpf}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Ações </th>
+                <td mat-cell *matCellDef="let element" class="actions-cell">
+                  <button
+                    (click)="editClient(element.id)"
+                    mat-button color="primary" class="action-button"
+                    type="button">
+                    <mat-icon fontIcon="edit"></mat-icon>
+                    Editar
+                  </button>
+                  <button
+                    (click)="confirmDelete(element.id)"
+                    mat-button color="warn"
+                    class="action-button"
+                    type="button">
+                    <mat-icon fontIcon="delete"></mat-icon>
+                    Excluir
+                  </button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+            <mat-paginator
+              [pageSizeOptions]="[5, 10, 20]"
+              showFirstLastButtons
+              aria-label="Selecione a página">
+            </mat-paginator>
           </div>
         </mat-card-content>
-        <mat-card-actions>
-          <button
-            mat-flat-button
-            color="primary"
-            type="submit"
-            fxFlex="100%">
-            <mat-icon fontIcon="search"></mat-icon>
-            Consultar
-          </button>
-        </mat-card-actions>
       </mat-card>
-    </form>
-  </div>
-</div>
-
-<div class="container" fxLayout="row" fxLayoutAlign="center" class="mt-60">
-  <div fxLayout="column" fxFlex="1200px">
-    <mat-card appearance="outlined" fxFlex="100%">
-      <mat-card-header class="header-card">
-        <mat-card-title>
-          Tabela de Clientes
-        </mat-card-title>
-      </mat-card-header>
-
-      <mat-card-content>
-        <!--  class="mat-elevation-z8" -->
-        <div>
-          <table mat-table [dataSource]="clientsList">
-            <ng-container matColumnDef="id">
-              <th mat-header-cell *matHeaderCellDef> ID </th>
-              <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef> Nome </th>
-              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="email">
-              <th mat-header-cell *matHeaderCellDef> Email </th>
-              <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="birthDate">
-              <th mat-header-cell *matHeaderCellDef> Data de Nascimento </th>
-              <td mat-cell *matCellDef="let element"> {{element.birthDate}}
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="cpf">
-              <th mat-header-cell *matHeaderCellDef> CPF </th>
-              <td mat-cell *matCellDef="let element"> {{element.cpf}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="actions">
-              <th mat-header-cell *matHeaderCellDef> Ações </th>
-              <td mat-cell *matCellDef="let element" class="actions-cell">
-                <button mat-icon-button color="primary" class="action-button">
-                  <mat-icon fontIcon="edit"></mat-icon>
-                  Editar
-                </button>
-                <button mat-icon-button color="warn" class="action-button">
-                  <mat-icon fontIcon="delete"></mat-icon>
-                  Excluir
-                </button>
-              </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          </table>
-
-          <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-            showFirstLastButtons
-            aria-label="Select page of periodic elements">
-          </mat-paginator>
-        </div>
-      </mat-card-content>
-    </mat-card>
+    </div>
   </div>
 </div>

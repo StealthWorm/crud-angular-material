@@ -2,7 +2,7 @@
   width: 100%;
   height: 100%;
   padding: 1rem;
-  max-width: 400px;
+  max-width: 1200px;
 }
 
 .card-content {
@@ -11,7 +11,7 @@
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 .header-card {
@@ -28,20 +28,24 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
-  width: 100%;
-  border: 1px solid #e0e0e0;
-  box-sizing: border-box;
+  gap: 0.5rem;
+  height: 100%;
+  padding: 0.5rem;
 
   .action-button {
-    width: 100%;
     display: flex;
-    width: 100px;
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
     font-size: 12px;
     font-weight: 500;
-    border-radius: 10px;
   }
+}
+
+.mat-mdc-row {
+  transition: background-color 0.3s ease;
+}
+
+.mat-mdc-row:hover {
+  background-color: rgba(228, 228, 228, 0.259);
 }
