@@ -12,6 +12,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Client } from './client';
 import { ClientService } from '../services/clients/client.service';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { BrasilApiService } from '../services/brasil-api/brasil-api.service';
+import { Estado, Municipio } from '../services/brasil-api/brasil-api.models';
 
 @Component({
   selector: 'app-register',
@@ -35,12 +37,15 @@ export class RegisterComponent {
 
   client: Client = Client.newClient();
   isEdit: boolean = false;
+  ufs: Estado[] = [];
+  municipios: Municipio[] = [];
 
   // Injeta o serviço de cliente
   constructor(
     private clientService: ClientService,
+    private brasilApiService: BrasilApiService,
     private route: ActivatedRoute, // para capturar o id da rota
-    private router: Router // para redirecionar para a página de consulta
+    private router: Router, // para redirecionar para a página de consulta
   ) { }
 
   ngOnInit() {
@@ -55,7 +60,19 @@ export class RegisterComponent {
         }
       }
     });
+
+    this.loadUfs(); // carrega as UFs após renderizar o componente
   }
+
+  loadUfs() {
+    this.brasilApiService.getUfs().subscribe((ufs) => {
+      this.ufs = ufs;
+      console.log(this.ufs);
+    }, (error) => {
+      console.error('Erro ao carregar as UFs', error);
+    });
+  }
+
   onSubmit() {
     if (this.client.name && this.client.email && this.client.birthDate && this.client.cpf) {
       if (this.isEdit) {
