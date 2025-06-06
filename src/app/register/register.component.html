@@ -60,6 +60,41 @@
             </mat-form-field>
           </div>
 
+          <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="16px"
+            class="full-width">
+            <mat-form-field class="form-field" fxFlex="100%">
+              <mat-label>Estado</mat-label>
+              <mat-select
+                [(ngModel)]="client.uf"
+                name="uf"
+                required
+                [(value)]="client.uf"
+                (selectionChange)="loadMunicipios($event)">
+                <mat-option
+                  *ngFor="let state of ufs"
+                  [value]="state.sigla">
+                  {{ state.sigla }} - {{ state.nome }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="form-field" fxFlex="100%">
+              <mat-label>Municipio</mat-label>
+              <mat-select
+                [(ngModel)]="client.city"
+                name="city"
+                required
+                [(value)]="client.city"
+                [disabled]="!client.uf">
+                <mat-option
+                  *ngFor="let city of municipios"
+                  [value]="city.nome">
+                  {{ city.nome }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
           <mat-card-actions fxLayout="column" fxLayout.gt-sm="grid"
             class="card-actions">
             <ng-container *ngIf="isEdit; else saveButton">

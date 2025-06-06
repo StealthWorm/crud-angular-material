@@ -9,6 +9,7 @@ import { MatCardModule } from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { Client } from './client';
 import { ClientService } from '../services/clients/client.service';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
@@ -27,6 +28,7 @@ import { Estado, Municipio } from '../services/brasil-api/brasil-api.models';
     MatIconModule,
     CommonModule,
     NgxMaskDirective,
+    MatSelectModule,
   ],
   providers: [provideNgxMask()],
   templateUrl: './register.component.html',
@@ -62,15 +64,37 @@ export class RegisterComponent {
     });
 
     this.loadUfs(); // carrega as UFs após renderizar o componente
+    if (this.client.uf) {
+      const event = { value: this.client.uf };
+      this.loadMunicipios(event as MatSelectChange);
+    }
   }
 
   loadUfs() {
-    this.brasilApiService.getUfs().subscribe((ufs) => {
-      this.ufs = ufs;
-      console.log(this.ufs);
-    }, (error) => {
-      console.error('Erro ao carregar as UFs', error);
+    this.brasilApiService.getUfs().subscribe({
+      next: (ufs) => {
+        this.ufs = ufs;
+        // console.log(this.ufs);
+      },
+      error: (error) => {
+        console.error('Erro ao carregar as UFs', error);
+      }
     });
+  }
+
+  loadMunicipios(event: MatSelectChange) {
+    const ufSelected = event.value;
+
+    if (ufSelected) {
+      this.brasilApiService.getMunicipios(ufSelected).subscribe({
+        next: (municipios) => {
+          this.municipios = municipios;
+        },
+        error: (error) => {
+          console.error('Erro ao carregar os municípios', error);
+        }
+      });
+    }
   }
 
   onSubmit() {

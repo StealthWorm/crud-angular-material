@@ -6,6 +6,8 @@ export class Client {
   email?: string;
   birthDate?: string;
   cpf?: string;
+  uf?: string;
+  city?: string;
 
   static newClient(): Client {
     let client = new Client();

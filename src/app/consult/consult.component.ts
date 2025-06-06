@@ -42,7 +42,7 @@ export class ConsultComponent implements AfterViewInit {
   private _liveAnnouncer = inject(LiveAnnouncer);
   private _snackBar = inject(MatSnackBar);
 
-  displayedColumns: string[] = ['id', 'name', 'email', 'birthDate', 'cpf', 'actions'];
+  displayedColumns: string[] = ['id', 'name', 'email', 'birthDate', 'cpf', 'uf', 'actions'];
   dataSource: MatTableDataSource<Client>;
   searchName: string = '';
 
